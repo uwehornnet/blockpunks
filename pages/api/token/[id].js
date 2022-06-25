@@ -5,8 +5,8 @@ export default function handler(req, res) {
 	const { id } = req.query;
 
 	const response = {
-		name: "Crypto Dev #1",
-		description: "Crypto Dev is a collection of developers in crypto",
+		name: `Blockpunks NFT #${id}`,
+		description: "Blockpunks NFT is a collection of PFP NFT´s",
 		image: `${host}/static/token/${id}.svg`,
 	};
 	res.status(200).json(response);
