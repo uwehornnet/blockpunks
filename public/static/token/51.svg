@@ -1,0 +1,19 @@
+<svg width="100%" height="100%" viewBox="0 0 1280 1280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g transform="matrix(2,0,0,2,0,0)"><g id="background" transform="matrix(20,0,0,20,0,0)"><rect x="0" y="0" width="32" height="32" style="fill:#F2E3D5;"/></g>
+<g id="meshs" transform="matrix(18.4802,0,0,19.5673,-0.484754,14.4742)"><g id="alpacka" transform="matrix(1.08224,0,0,1.02212,0.026231,-0.739717)">
+            <path id="color5" serif:id="color" d="M11,32L11,6L12,6L12,5L13,5L13,12L14,12L14,13L20,13L20,12L21,12L21,5L22,5L22,6L23,6L23,24L22,24L22,26L21,26L21,27L20,27L20,28L16,28L16,32L11,32Z" style="fill:#D93250;"/>
+            <path d="M10,32L10,16L11,16L11,13.5L10,13.5L10,6L11,6L11,5L12,5L12,4L14,4L14,12L20,12L20,4L22,4L22,5L23,5L23,6L24,6L24,14L23,14L23,16L23.981,16L24,24L23,24L23,26L22,26L22,27L21,27L21,28L20,28L20,29L17,29L17,32L16,32L16,29L15,29L15,28L20,28L20,27L21,27L21,26L22,26L22,24L23,24L23,17L22,17L22,14L23,14L23,6L22,6L22,5L21,5L21,12L20,12L20,13L14,13L14,12L13,12L13,5L12,5L12,6L11,6L11,13.5L12,13.5L12,17L11,17L11,32L10,32Z"/>
+            <path d="M19,25L19,26L17,26L17,25L16,25L16,24L16.99,24L17,25L19,25Z"/>
+            <rect x="14" y="16" width="1" height="1" style="fill:white;"/>
+            <rect x="21" y="16" width="1" height="1" style="fill:white;"/>
+            <rect x="17" y="21" width="2" height="1" style="fill:rgb(254,31,104);"/>
+            <g transform="matrix(0.05,0,0,0.05,0,0)">
+                <path d="M440,100L440,260L400,260L400,240L420,240L420,100L440,100Z" style="fill-opacity:0.22;"/>
+            </g>
+            <g transform="matrix(0.05,0,0,0.05,0,0)">
+                <path d="M240,120L240,260L260,260L260,380L240,380L240,640L220,640L220,340L240,340L240,270L220,270L220,120L240,120Z" style="fill-opacity:0.23;"/>
+            </g>
+        </g></g><g id="accessoiries" transform="matrix(22.5744,0,0,15.0513,-20.6845,82.9368)">null</g>
+		<g transform="matrix(1.55556,0,0,1.38272,-4746.67,-2484.46)">
+			<g id="bart"></g>
+        </g>
+	<g id="glases" transform="matrix(14.9706,0,0,15,90.1646,180)"></g></g></svg>

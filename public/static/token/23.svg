@@ -1,0 +1,38 @@
+<svg width="100%" height="100%" viewBox="0 0 1280 1280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g transform="matrix(2,0,0,2,0,0)"><g id="background" transform="matrix(20,0,0,20,0,0)"><rect x="0" y="0" width="32" height="32" style="fill:#E6DCD8;"/></g>
+<g id="meshs" transform="matrix(18.4802,0,0,19.5673,-0.484754,14.4742)"><g id="male" transform="matrix(1.08224,0,0,1.02212,1.10847,-0.739717)">
+            <path id="color2" serif:id="color" d="M10,32L10,19L9,19L9,16L10,16L10,9L11,9L11,8L21,8L21,9L22,9L22,27L21,27L21,28L16,28L16,32L10,32Z" style="fill:#E0BAA6;"/>
+            <path d="M9,32L9,20L8,20L8,15L9,15L9,9L10,9L10,8L11,8L11,7L21,7L21,8L22,8L22,9L23,9L23,27L22,27L22,28L21,28L21,29L17,29L17,32L16,32L16,29L13,29L13,28L12,28L12,27L13,27L13,28L21,28L21,27L22,27L22,9L21,9L21,8L11,8L11,9L10,9L10,16L9,16L9,19L10,19.019L10,32L9,32Z"/>
+            <rect x="17" y="20" width="3" height="1"/>
+            <g transform="matrix(1.33333,0,0,1,-7.66667,4)">
+                <rect x="17" y="20" width="3" height="1"/>
+            </g>
+            <g transform="matrix(0.923077,0,0,1,2,0)">
+                <rect x="13" y="16" width="1.083" height="1"/>
+            </g>
+            <g transform="matrix(0.923077,0,0,1,9,0)">
+                <rect x="13" y="16" width="1.083" height="1"/>
+            </g>
+            <g transform="matrix(1,0,0,1,1,0)">
+                <rect x="12" y="16" width="1" height="1" style="fill:white;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,8,0)">
+                <rect x="12" y="16" width="1" height="1" style="fill:white;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,1,0)">
+                <rect x="12" y="15" width="2" height="1" style="fill-opacity:0.41;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,8,0)">
+                <rect x="12" y="15" width="2" height="1" style="fill-opacity:0.41;"/>
+            </g>
+            <g transform="matrix(0.05,0,0,0.05,-1,0)">
+                <path d="M300,160L300,180L280,180L280,200L260,200L260,520L280,520L280,540L300,540L300,560L280,560L280,600L260,600L260,640L220,640L220,380L200,380L200,320L220,320L220,180L240,180L240,160L300,160Z" style="fill-opacity:0.09;"/>
+            </g>
+        </g></g><g id="accessoiries" transform="matrix(22.5744,0,0,15.0513,-20.6845,82.9368)"><g id="elvis" transform="matrix(0.0787519,0,0,0.118115,-298.243,-229.19)">
+            <path d="M4068.75,2006.25L4068.75,1995L4057.5,1995L4057.5,1972.5L4046.25,1972.5L4046.25,1950L3978.75,1950L3978.75,1961.25L3945,1961.25L3945,1983.75L3922.5,1983.75L3922.5,1995L3900,1995L3900,2152.5L3922.5,2152.5L3922.5,2175L3945,2175L3945,2141.25L3933.75,2141.25L3933.75,2130L3911.25,2130L3911.25,2040L3933.75,2040L3933.75,2006.25L3990,2006.25L3990,2017.5L4035,2017.5L4035,2006.25L4068.75,2006.25Z"/>
+        </g></g>
+		<g transform="matrix(1.55556,0,0,1.38272,-4746.67,-2484.46)">
+			<g id="bart"></g>
+        </g>
+	<g id="glases" transform="matrix(14.9706,0,0,15,90.1646,180)"><g id="party" transform="matrix(1.05263,0,0,1,-0.314999,-1)">
+                <path d="M6,11.667L4.731,11.667L4.731,9L9.807,9L9.807,6.333L17.422,6.333L17.422,9L18.692,9L18.692,6.333L26.306,6.333L26.306,15.667L18.692,15.667L18.692,10.333L17.422,10.333L17.422,15.667L9.807,15.667L9.807,10.333L6,10.333L6,11.667ZM11.077,13L16.153,13L16.153,14.333L11.077,14.333L11.077,13ZM19.961,13L25.037,13L25.037,14.333L19.961,14.333L19.961,13ZM11.077,10.333L16.153,10.333L16.153,11.667L11.077,11.667L11.077,10.333ZM19.961,10.333L25.037,10.333L25.037,11.667L19.961,11.667L19.961,10.333ZM11.077,7.667L16.153,7.667L16.153,9L11.077,9L11.077,7.667ZM19.961,7.667L25.037,7.667L25.037,9L19.961,9L19.961,7.667Z" style="fill:#1621F2;"/>
+            </g></g></g></svg>

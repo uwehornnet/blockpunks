@@ -1,0 +1,31 @@
+<svg width="100%" height="100%" viewBox="0 0 1280 1280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g transform="matrix(2,0,0,2,0,0)"><g id="background" transform="matrix(20,0,0,20,0,0)"><rect x="0" y="0" width="32" height="32" style="fill:#D8E6E3;"/></g>
+<g id="meshs" transform="matrix(18.4802,0,0,19.5673,-0.484754,14.4742)"><g id="alpacka" transform="matrix(1.08224,0,0,1.02212,0.026231,-0.739717)">
+            <path id="color5" serif:id="color" d="M11,32L11,6L12,6L12,5L13,5L13,12L14,12L14,13L20,13L20,12L21,12L21,5L22,5L22,6L23,6L23,24L22,24L22,26L21,26L21,27L20,27L20,28L16,28L16,32L11,32Z" style="fill:#F23D91;"/>
+            <path d="M10,32L10,16L11,16L11,13.5L10,13.5L10,6L11,6L11,5L12,5L12,4L14,4L14,12L20,12L20,4L22,4L22,5L23,5L23,6L24,6L24,14L23,14L23,16L23.981,16L24,24L23,24L23,26L22,26L22,27L21,27L21,28L20,28L20,29L17,29L17,32L16,32L16,29L15,29L15,28L20,28L20,27L21,27L21,26L22,26L22,24L23,24L23,17L22,17L22,14L23,14L23,6L22,6L22,5L21,5L21,12L20,12L20,13L14,13L14,12L13,12L13,5L12,5L12,6L11,6L11,13.5L12,13.5L12,17L11,17L11,32L10,32Z"/>
+            <path d="M19,25L19,26L17,26L17,25L16,25L16,24L16.99,24L17,25L19,25Z"/>
+            <rect x="14" y="16" width="1" height="1" style="fill:white;"/>
+            <rect x="21" y="16" width="1" height="1" style="fill:white;"/>
+            <rect x="17" y="21" width="2" height="1" style="fill:rgb(254,31,104);"/>
+            <g transform="matrix(0.05,0,0,0.05,0,0)">
+                <path d="M440,100L440,260L400,260L400,240L420,240L420,100L440,100Z" style="fill-opacity:0.22;"/>
+            </g>
+            <g transform="matrix(0.05,0,0,0.05,0,0)">
+                <path d="M240,120L240,260L260,260L260,380L240,380L240,640L220,640L220,340L240,340L240,270L220,270L220,120L240,120Z" style="fill-opacity:0.23;"/>
+            </g>
+        </g></g><g id="accessoiries" transform="matrix(22.5744,0,0,15.0513,-20.6845,82.9368)">null</g>
+		<g transform="matrix(1.55556,0,0,1.38272,-4746.67,-2484.46)">
+			<g id="bart"><path d="M3192.86,2129.47L3205.72,2129.47L3205.71,2143.94L3244.29,2143.94L3244.29,2129.47L3270,2130.01L3270,2115.01L3321.43,2115.01L3321.43,2129.47L3334.29,2129.47L3334.29,2143.94L3360,2143.94L3360,2201.8L3347.14,2201.8L3347.14,2216.26L3334.29,2216.26L3334.29,2230.72L3321.43,2230.72L3321.43,2245.19L3257.14,2245.19L3257.14,2230.72L3244.29,2230.72L3244.29,2216.26L3231.43,2216.26L3231.43,2201.8L3205.71,2201.8L3205.71,2187.33L3192.86,2187.33L3192.86,2129.47Z" style="fill:black;"/></g>
+        </g>
+	<g id="glases" transform="matrix(14.9706,0,0,15,90.1646,180)"><g id="nounsbrille" transform="matrix(1.05263,0,0,1,-0.314999,-1)">
+                <g>
+                    <rect x="21.23" y="7.667" width="3.807" height="6.667" style="fill:rgb(1,0,0);"/>
+                    <rect x="19.961" y="7.667" width="1.269" height="6.667" style="fill:white;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-8.03234,0)">
+                    <g transform="matrix(1.10647,0,0,1,-2.02289,0)">
+                        <rect x="20.246" y="7.667" width="3.441" height="6.667" style="fill:rgb(1,0,0);"/>
+                    </g>
+                    <rect x="19.109" y="7.667" width="1.269" height="6.667" style="fill:white;"/>
+                </g>
+                <path id="_1" serif:id="1" d="M6,11.667L6,10.333L9.807,10.333L9.807,15.667L17.422,15.667L17.422,10.333L18.692,10.333L18.692,15.667L26.269,15.667L26.306,6.333L18.692,6.333L18.692,9L17.422,9L17.422,6.333L9.807,6.333L9.807,9L4.731,9L4.731,11.667L6,11.667ZM11.077,7.667L16.153,7.667L16.153,14.333L11.077,14.333L11.077,7.667ZM19.961,7.667L25.037,7.667L25.037,14.333L19.961,14.333L19.961,7.667Z" style="fill:#1621F2;"/>
+            </g></g></g></svg>
