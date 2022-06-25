@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import Head from "next/head";
 
 import { CustomConnectButton } from "../components/CustomConnectButton";
-
+import BlockpunksNFT from "../BlockpunksNFT.json";
 const Home = () => {
 	const imageContainer = useRef(null);
 	let i = 30;
@@ -51,7 +51,7 @@ const Home = () => {
 
 							<div className="flex items-center gap-4">
 								<a
-									href="https://rinkeby.etherscan.io/address/0x005EC6CcB177180B5A22CDeF54F036f8c5AB72F6"
+									href={`https://rinkeby.etherscan.io/address/${BlockpunksNFT.address}`}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
