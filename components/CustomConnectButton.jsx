@@ -53,7 +53,8 @@ export const CustomConnectButton = () => {
 		try {
 			const signer = await getProviderOrSigner();
 			const contract = new Contract(BlockpunksNFT.address, BlockpunksNFT.abi, signer);
-			contract.on("Minted", (_, tokenId) => {
+			contract.on("Minted", (_, _mintedToken, tokenId) => {
+				console.log(_mintedToken);
 				const tokenMinted = tokenId.toString();
 				setAvailableSupply(tokenMinted);
 				setloading(false);
