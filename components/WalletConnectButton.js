@@ -1,5 +1,13 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { currentChain } from "../config";
+
+const currentChain = () => {
+	const chainIDs = {
+		rinkeby: 4,
+		localhost: 31337,
+	};
+
+	return chainIDs["rinkeby"];
+};
 
 const WalletConnectButton = () => {
 	return (
