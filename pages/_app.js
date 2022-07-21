@@ -10,7 +10,7 @@ import { NotificationContextProvider } from "../context";
 import Layout from "../layout";
 
 const { chains, provider } = configureChains(
-	[chain.rinkeby, chain.mainnet, chain.hardhat],
+	[chain.ropsten, chain.rinkeby, chain.mainnet, chain.hardhat],
 	[alchemyProvider({ alchemyId: process.env.ALCHEMY_API_KEY }), publicProvider()]
 );
 
