@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	font-family: "Source Code Pro", monospace;
+@layer base {
+	@font-face {
+		font-family: "Jost";
+		font-weight: 400;
+		src: local(""), url(/fonts/Jost-Regular.woff) format("woff"), local(""), url(/Jost-Regular.ttf) format("ttf");
+	}
+
+	@font-face {
+		font-family: "Jost";
+		font-weight: 500;
+		src: local(""), url(/fonts/Jost-Semibold.woff) format("woff"), local(""),
+			url(/fonts/Jost-Semibold.ttf) format("ttf");
+	}
 }
+
 @layer utilities {
 	/* Hide scrollbar for Chrome, Safari and Opera */
 	.no-scrollbar::-webkit-scrollbar {
@@ -16,4 +28,11 @@ body {
 		-ms-overflow-style: none; /* IE and Edge */
 		scrollbar-width: none; /* Firefox */
 	}
+}
+html {
+	background-color: black;
+}
+body {
+	font-family: "Jost", sans-serif;
+	font-size: 18px;
 }

@@ -1,9 +1,9 @@
 import { utils } from "ethers";
 
-const SwapDetails = ({ estimatedGas, isTokenOwner, buyAmount, buyToken }) => {
+const SwapDetails = ({ estimatedGas, isTokenOwner, buyAmount, buyToken, protocolFee }) => {
 	return (
 		<>
-			<div className="flex items-center justify-between text-xs px-4 mt-8">
+			<div className="flex items-center justify-between text-xs px-4 mt-4">
 				<span className="flex items-center text-white">
 					<svg viewBox="0 0 296.114 296.114" fill="currentcolor" className="h-3 w-3 mr-2">
 						<path
@@ -16,21 +16,29 @@ const SwapDetails = ({ estimatedGas, isTokenOwner, buyAmount, buyToken }) => {
 	C287.503,25.225,283.094,20.815,277.66,20.815z M176.427,115.093H39.298V31.864h137.129V115.093z"
 						/>
 					</svg>
-					est gas
+					Gas
 				</span>
 				<span className="text-right">{estimatedGas}</span>
 			</div>
-
-			{!isTokenOwner ? (
+			<div className="px-4 mt-2">
+				<div className="flex items-center justify-between mb-4 text-xs">
+					<span>Protocol Fee</span>
+					<span>{protocolFee}</span>
+				</div>
+			</div>
+			{buyAmount ? (
 				<div className="px-4 mt-2">
 					<div className="flex items-center justify-between mb-4 text-xs">
-						<span>Tx costs 1%</span>
+						<span>Tx Fee</span>
 						<span>
-							{`${utils.formatEther(isTokenOwner ? "0" : `${buyAmount * 0.01}`).toString()}
-						${buyToken?.symbol}`}
+							<span className={isTokenOwner ? "line-through" : ""}>
+								{`${parseFloat((parseInt(buyAmount) / 10 ** buyToken.decimals) * 0.01).toFixed(2)}
+							${buyToken?.symbol}`}
+							</span>
+							{isTokenOwner ? <span className="text-green-400 font-medium ml-2">free</span> : null}
 						</span>
 					</div>
-					<p className="text-xs text-slate-600">
+					<p className="text-xs text-slate-400">
 						If you dont own a Blockpunk NFT, we charge you 1% transaction fee.
 					</p>
 				</div>

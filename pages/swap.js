@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
-import { Contract, utils } from "ethers";
-import { useAccount, useProvider, useSigner, useConnect, useBalance } from "wagmi";
-import { useQuote, swapToken } from "../hooks/useProtocoll";
+import { Contract, BigNumber } from "ethers";
+import { useAccount, useProvider, useSigner, useConnect } from "wagmi";
 import TokenModal from "../components/TokenModal";
 import SwapDetails from "../components/SwapDetails";
 import WalletConnectButton from "../components/WalletConnectButton";
+import RecentTransactions from "../components/RecentTransactions";
 import BlockpunksNFT from "../BlockpunksNFT.json";
+import { erc20ABI } from "wagmi";
 
 const Swap = ({ token }) => {
+	const [buttonDisabled, setButtonDisabled] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [loadingMessage, setLoadingMessage] = useState("Loading...");
+	const [buttonMessage, setButtonMessage] = useState("swap token");
+
 	const { isConnected } = useConnect();
 	const provider = useProvider();
 	const { data: signer } = useSigner();
 	const { data: account } = useAccount();
-	const { data: balance } = useBalance({
-		addressOrName: account?.address,
-	});
 
 	const [isTokenOwner, setIsTokenOwner] = useState(false);
 	const [showTokenModal, setShowTokenModal] = useState(false);
 	const [buyToken, setBuyToken] = useState(null);
-	const [inputValue, setInputValue] = useState(0);
+	const [inputValue, setInputValue] = useState(0.0);
+	const [sellToken, setSellToken] = useState(token.find((t) => t.symbol === "WETH"));
 	const [sellTokenAmount, setSellTokenAmount] = useState(0);
+	const [swapPrice, setSwapPrice] = useState(null);
+	const [stablePrice, setStablePrice] = useState(null);
 
 	const getBalanaceOfAccount = async (needSigner = false) => {
 		try {
@@ -33,120 +39,266 @@ const Swap = ({ token }) => {
 		}
 	};
 
-	const { quote, loading, error } = useQuote({
-		buyToken,
-		sellTokenAmount,
-		isTokenOwner,
-	});
+	const fetchStablePrice = async (amount) => {
+		if (!sellToken) return;
+		const stableParams = {
+			buyToken: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+			sellToken: sellToken.address,
+			sellAmount: Number(amount * 10 ** sellToken.decimals),
+		};
+
+		const stableResponse = await fetch(
+			`https://api.0x.org/swap/v1/price?${new URLSearchParams(stableParams).toString()}`
+		);
+		const stableJson = await stableResponse.json();
+		setStablePrice(stableJson);
+	};
+
+	const fetchPriceAsync = async () => {
+		try {
+			setLoading(true);
+			setLoadingMessage("... fetching the best price");
+			let params = {
+				buyToken: buyToken.address,
+				sellToken: sellToken.address,
+				sellAmount: Number(sellTokenAmount * 10 ** sellToken.decimals),
+				affiliateAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+				feeRecipient: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+				buyTokenPercentageFee: isTokenOwner ? 0 : 1.0,
+			};
+
+			let endpoint = new URLSearchParams(params).toString();
+
+			const response = await fetch(`https://api.0x.org/swap/v1/price?${endpoint}`);
+			const json = await response.json();
+
+			setSwapPrice(json);
+			setLoading(false);
+			setLoadingMessage("");
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const fetchQuoteAsync = async () => {
+		try {
+			let params = {
+				buyToken: buyToken.address,
+				sellToken: sellToken.address,
+				sellAmount: Number(sellTokenAmount * 10 ** sellToken.decimals),
+				affiliateAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+				feeRecipient: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+				buyTokenPercentageFee: isTokenOwner ? 0 : 1.0,
+				//takerAddress: account.address,
+				//takerAddress: "0x41E8dD9926fC0DB7759F2899660a470D3D48A1d0",
+			};
+
+			let endpoint = new URLSearchParams(params).toString();
+
+			const response = await fetch(`https://api.0x.org/swap/v1/quote?${endpoint}`);
+			return await response.json();
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const swapToken = async () => {
+		try {
+			if (buttonDisabled) return;
+			setButtonDisabled(true);
+			setButtonMessage("... swapping tokens");
+			const quote = await fetchQuoteAsync();
+			console.log({ quote });
+
+			const contract = new Contract(sellToken.address, erc20ABI, signer);
+			console.log({ contract });
+
+			const maxApproval = BigNumber.from(quote.sellAmount);
+			const approval = await contract.approve(quote.allowanceTarget, maxApproval);
+
+			console.log({ approval });
+
+			setButtonMessage("done");
+			setTimeout(() => {
+				setSellTokenAmount(0);
+				setInputValue(0);
+				setBuyToken(null);
+				setSellToken(null);
+				setSwapPrice(null);
+				setStablePrice(null);
+				setButtonMessage("swap Token");
+				setButtonDisabled(false);
+			}, 2000);
+		} catch (err) {
+			console.log(err);
+			setButtonMessage("🤯 transaction failed");
+		}
+	};
 
 	useEffect(() => {
-		if (!account && !provider && !signer) return;
+		if (!isConnected && !account && !provider && !signer) return;
 		getBalanaceOfAccount();
 	}, [account, provider, signer]);
 
+	useEffect(() => {
+		if (sellToken !== null && buyToken !== null && sellTokenAmount !== 0) {
+			fetchPriceAsync();
+			setButtonDisabled(false);
+		}
+
+		if (sellToken !== null && sellTokenAmount !== 0) {
+			fetchStablePrice(sellTokenAmount);
+		}
+	}, [sellToken, buyToken, sellTokenAmount, isTokenOwner]);
+
 	return (
-		<main className="bg-black w-screen flex-1 pt-24 h-full">
+		<main className="bg-black w-screen flex-1 mt-24 pt-24 h-full relative">
 			<div className="container z-50 relative">
-				<div className="max-w-[480px] mx-auto rounded-lg bg-[#1B1929] p-4 text-white shadow-xl relative">
+				<div className="max-w-[400px] mx-auto rounded-xl bg-[#13121D] p-2 text-white shadow-xl relative">
 					<TokenModal
 						token={token}
 						visible={showTokenModal}
-						onChange={(token) => setBuyToken(token)}
+						onChange={({ type, token }) => {
+							if (type == "from") {
+								setSellToken(token);
+							} else {
+								setBuyToken(token);
+							}
+						}}
 						onClose={() => setShowTokenModal(false)}
 					/>
-					<div className="flex justify-between items-center">
-						<h2 className="text-xl my-6 uppercase">Token Swap</h2>
-						<span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								className="h-6 w-6"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								strokeWidth={2}
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-								/>
-							</svg>
-						</span>
-					</div>
+					<h2 className="text-xl text-center mb-8 font-medium">Token Swap</h2>
 
-					<div className="p-4 border-[1px] border-slate-600 border-solid rounded-md mb-4">
-						<strong className="text-[12px] block mb-6 text-white">you sell</strong>
-						<div className="flex items-start justify-start">
-							<div className="flex-1">
+					<div className="p-2 tablet:p-4 bg-[#212230] rounded-xl mb-2">
+						<strong className="text-[12px] block mb-6 text-white font-medium tracking-wider">
+							you sell
+						</strong>
+						<div className="grid grid-cols-2 tablet:grid-cols-5 gap-8 items-center">
+							<div className="tablet:col-span-3">
 								<input
 									type="text"
 									value={inputValue}
 									onChange={(e) => setInputValue(e.target.value)}
 									onBlur={() => {
-										if (balance && Number(balance?.formatted) < Number(inputValue)) {
-											setSellTokenAmount(0);
-											setInputValue(0);
-										} else {
-											setSellTokenAmount(inputValue);
-										}
+										setSellTokenAmount(inputValue);
+										fetchStablePrice(inputValue);
 									}}
-									className="block text-left bg-transparent border-none outline-none text-[24px] w-full"
+									className="block text-left bg-transparent border-none outline-none text-[18px] w-full"
 									placeholder="0.001"
 								/>
-								<span className="block text-left text-slate-600 text-sm">
-									balance: {balance ? balance?.formatted.slice(0, 8) : 0}
+								<span className="block text-left text-slate-400 text-sm">
+									~$
+									{stablePrice
+										? parseFloat(parseFloat(stablePrice.price) * sellTokenAmount).toFixed(2)
+										: parseFloat(0).toFixed(2)}
 								</span>
 							</div>
-							<div className="flex items-center gap-4">
-								<img src="/images/eth.webp" alt="eth" className="h-8 w-8" />
-								<span className="block text-[24px]">eth</span>
-							</div>
-						</div>
-					</div>
-
-					<div className="rounded-md">
-						<strong className="text-[12px] block mb-3 pl-4 text-white">you buy</strong>
-						<div className="flex items-center justify-between">
-							<div className="flex-1 overflow-x-auto pl-4 no-scroolbar">
-								<span className="block text-left text-[24px]">
-									{quote ? utils.formatEther(`${quote.buyAmount}`).toString().slice(0, 10) : 0}
-								</span>
-							</div>
-							<div>
+							<div className="tablet:col-span-2">
 								<span
-									onClick={() => setShowTokenModal(true)}
-									className="block  px-4 py-2 rounded-lg cursor-pointer"
+									onClick={() => setShowTokenModal("from")}
+									className="block rounded-lg cursor-pointer"
 								>
-									{buyToken ? (
-										<span className="flex gap-2 items-center">
-											<img
-												className="h-8 w-8 mr-4 rounded-full object-fill"
-												src={buyToken.logoURI}
-											/>
-											<p className=" text-[24px]">{buyToken.symbol}</p>
+									{sellToken ? (
+										<span className="flex gap-2 items-center justify-between">
+											<span className="flex gap-2 items-center">
+												<img
+													className="h-6 w-6 rounded-full object-fill bg-white border-[2px] border-solid border-white"
+													src={sellToken.logoURI}
+												/>
+												<p className=" text-[18px]">{sellToken.symbol}</p>
+											</span>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												className="h-5 w-5"
+												viewBox="0 0 20 20"
+												fill="currentColor"
+											>
+												<path
+													fillRule="evenodd"
+													d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+													clipRule="evenodd"
+												/>
+											</svg>
 										</span>
 									) : (
-										<span className="text-xs px-4 py-2 bg-violet-600 rounded-md">select token</span>
+										<span className="text-sm px-3 py-1 bg-violet-600 rounded-md font-medium">
+											select token
+										</span>
 									)}
 								</span>
 							</div>
 						</div>
 					</div>
-					{quote && <SwapDetails {...quote} isTokenOwner={isTokenOwner} buyToken={buyToken} />}
+
+					<div className="rounded-xl bg-[#212230] p-2 tablet:p-4">
+						<strong className="text-[12px] block mb-6 text-white font-medium tracking-wider">
+							you buy
+						</strong>
+						<div className="grid grid-cols-2 tablet:grid-cols-5 gap-8 items-end">
+							<div className="tablet:col-span-3 overflow-x-auto no-scroolbar">
+								<span className="block text-left text-[18px]">
+									{swapPrice !== null
+										? parseFloat(swapPrice.buyAmount / 10 ** buyToken.decimals).toFixed(2)
+										: parseFloat(0).toFixed(2)}
+								</span>
+							</div>
+							<div className="tablet:col-span-2">
+								<span
+									onClick={() => setShowTokenModal("to")}
+									className="block rounded-lg cursor-pointer"
+								>
+									{buyToken ? (
+										<span className="flex gap-2 items-center  justify-between">
+											<span className="flex gap-2 items-center">
+												<img
+													className="h-6 w-6 rounded-full object-fill bg-white border-[2px] border-solid border-white"
+													src={buyToken.logoURI}
+												/>
+												<p className=" text-[18px]">{buyToken.symbol}</p>
+											</span>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												className="h-5 w-5"
+												viewBox="0 0 20 20"
+												fill="currentColor"
+											>
+												<path
+													fillRule="evenodd"
+													d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+													clipRule="evenodd"
+												/>
+											</svg>
+										</span>
+									) : (
+										<span className="text-sm px-3 py-1 bg-violet-600 rounded-md font-medium">
+											select token
+										</span>
+									)}
+								</span>
+							</div>
+						</div>
+					</div>
+					{loading && <span className="text-xs">{loadingMessage}</span>}
+					{swapPrice && <SwapDetails {...swapPrice} isTokenOwner={isTokenOwner} buyToken={buyToken} />}
 					<div className="mt-8">
 						{isConnected ? (
 							<button
-								disabled={false}
+								disabled={buttonDisabled}
 								onClick={swapToken}
-								className="rounded-md bg-violet-600 text-white text-center block w-full py-4 px-6 cursor-pointer"
+								className="rounded-md bg-violet-600 disabled:bg-[#212230] disabled:cursor-not-allowed text-white text-center block w-full py-4 px-6 cursor-pointer font-medium tracking-wider"
 							>
-								swap token
+								{buttonMessage}
 							</button>
 						) : (
-							<WalletConnectButton />
+							<span className="rounded-md bg-violet-600 flex justify-center w-full py-4 px-6 cursor-pointer font-medium tracking-wider text-lg">
+								<WalletConnectButton />
+							</span>
 						)}
 					</div>
+					<RecentTransactions token={token} currentToken={sellToken} />
 				</div>
+
+				<p className="text-center text-xs text-slate-400 mt-4 font-medium tracking-wider">powered by 0x Swap</p>
 			</div>
 		</main>
 	);

@@ -63,6 +63,7 @@ export const useQuote = ({ buyToken, sellTokenAmount, isTokenOwner }) => {
 	};
 
 	useEffect(() => {
+		if (quote !== null) return;
 		if (sellTokenAmount == 0 && !buyToken && !isTokenOwner) return;
 		fetchQuoteAsync();
 	}, [buyToken, sellTokenAmount]);

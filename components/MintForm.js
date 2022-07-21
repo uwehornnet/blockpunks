@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 
-import { useConnect, useProvider, useSigner, useAccount } from "wagmi";
-import { Contract, utils } from "ethers";
+import { useConnect, useProvider, useSigner } from "wagmi";
+
+import { Contract } from "ethers";
 
 import BlockpunksNFT from "../BlockpunksNFT.json";
 
 const MintForm = () => {
 	const [loading, setLoading] = useState(true);
+	const [stateMessage, setStateMessage] = useState("🚀 mint NFT");
+
 	const [tokenAmount, setTokenAmount] = useState(0);
 	const [tokenSupply, setTokenSupply] = useState(0);
 	const [mintValue, setMintValue] = useState(5);
@@ -14,7 +17,6 @@ const MintForm = () => {
 	const { isConnected } = useConnect();
 	const provider = useProvider();
 	const { data: signer } = useSigner();
-	const { data: account } = useAccount();
 
 	const listenToMintedToken = async () => {
 		try {
@@ -22,9 +24,15 @@ const MintForm = () => {
 			contract.on("TokenMinted", (_, tokenId) => {
 				const tokenMinted = tokenId.toString();
 				setTokenAmount(Number(tokenMinted) + 1);
+				setStateMessage(`🎉 token minted`);
+				setTimeout(() => {
+					setStateMessage("🚀 mint NFT");
+				}, 2000);
+				setLoading(false);
 			});
 		} catch (err) {
 			console.log(err);
+			setStateMessage("🤯 Uppps, something went wrong");
 		}
 	};
 
@@ -36,6 +44,7 @@ const MintForm = () => {
 			setTokenAmount(tokenAmountMinted.toString());
 		} catch (error) {
 			console.log(error);
+			setStateMessage("🤯 Uppps, something went wrong");
 		}
 	};
 
@@ -47,15 +56,21 @@ const MintForm = () => {
 			setTokenSupply(tokenSupply.toString());
 		} catch (error) {
 			console.log(error);
+			setStateMessage("🤯 Uppps, something went wrong");
 		}
 	};
 
 	const mintNFT = async () => {
 		try {
+			if (parseInt(mintValue) <= 0) return;
+			setLoading(true);
+			setStateMessage("🐿 minting ... ");
 			const contract = new Contract(BlockpunksNFT.address, BlockpunksNFT.abi, signer);
 			await contract.mint(mintValue);
 		} catch (error) {
 			console.log(error);
+			setStateMessage("🤯 Uppps, something went wrong");
+			setLoading(false);
 		}
 	};
 
@@ -63,10 +78,12 @@ const MintForm = () => {
 		listenToMintedToken();
 		fetchTokenAmountMintedAsync();
 		fetchTokenSupplyAsync();
-		setLoading(false);
+		setTimeout(() => {
+			setLoading(false);
+		}, 3000);
 	}, []);
 
-	return (
+	return isConnected && (
 		<>
 			<div className="flex items-center gap-16 mb-8 mt-16">
 				<div>
@@ -101,7 +118,7 @@ const MintForm = () => {
 						type="text"
 						className="text-center max-w-[40px]"
 						value={mintValue}
-						onChange={(e) => setMintValue(e.target.value)}
+						onChange={(e) => setMintValue(Number(e.target.value))}
 					/>
 					<button
 						className="disabled:cursor-not-allowed"
@@ -120,8 +137,12 @@ const MintForm = () => {
 						</svg>
 					</button>
 				</div>
-				<button disabled={loading} onClick={mintNFT} className="bg-violet-600 text-white rounded-md py-3 px-6">
-					🚀 mint NFT
+				<button
+					disabled={loading}
+					onClick={mintNFT}
+					className="bg-violet-600 text-white font-medium tracking-wider rounded-md py-3 px-6"
+				>
+					{stateMessage}
 				</button>
 			</div>
 		</>

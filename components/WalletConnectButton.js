@@ -30,7 +30,7 @@ const WalletConnectButton = () => {
 									<button
 										onClick={openConnectModal}
 										type="button"
-										className="bg-violet-600 flex items-center justify-center text-center rounded-md py-2 px-4 uppercase text-white text-sm"
+										className="font-medium flex items-center justify-center text-center rounded-md py-2 px-4 text-white"
 									>
 										<svg
 											viewBox="0 0 24 24"
@@ -76,8 +76,8 @@ const WalletConnectButton = () => {
 												<div
 													style={{
 														background: chain.iconBackground,
-														width: 12,
-														height: 12,
+														width: 18,
+														height: 18,
 														borderRadius: 999,
 														overflow: "hidden",
 														marginRight: 4,
@@ -87,7 +87,7 @@ const WalletConnectButton = () => {
 														<img
 															alt={chain.name ?? "Chain icon"}
 															src={chain.iconUrl}
-															style={{ width: 12, height: 12 }}
+															style={{ width: 18, height: 18 }}
 														/>
 													)}
 												</div>
