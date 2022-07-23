@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Contract, BigNumber } from "ethers";
 import { useAccount, useProvider, useSigner, useConnect } from "wagmi";
 import TokenModal from "../components/TokenModal";
@@ -7,8 +7,11 @@ import WalletConnectButton from "../components/WalletConnectButton";
 import RecentTransactions from "../components/RecentTransactions";
 import BlockpunksNFT from "../BlockpunksNFT.json";
 import { erc20ABI } from "wagmi";
+import { NotificationContext } from "../context/index";
 
-const Swap = ({ token }) => {
+const Swap = () => {
+	const { token } = useContext(NotificationContext);
+
 	const [buttonDisabled, setButtonDisabled] = useState(true);
 	const [loading, setLoading] = useState(false);
 	const [loadingMessage, setLoadingMessage] = useState("Loading...");
@@ -40,7 +43,8 @@ const Swap = ({ token }) => {
 	};
 
 	const fetchStablePrice = async (amount) => {
-		if (!sellToken) return;
+		if (!sellToken || amount == 0) return;
+
 		const stableParams = {
 			buyToken: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
 			sellToken: sellToken.address,
@@ -56,6 +60,7 @@ const Swap = ({ token }) => {
 
 	const fetchPriceAsync = async () => {
 		try {
+			if (sellTokenAmount == 0) return;
 			setLoading(true);
 			setLoadingMessage("... fetching the best price");
 			let params = {
@@ -152,9 +157,9 @@ const Swap = ({ token }) => {
 	}, [sellToken, buyToken, sellTokenAmount, isTokenOwner]);
 
 	return (
-		<main className="bg-black w-screen flex-1 mt-24 pt-24 h-full relative">
+		<main className="bg-black w-screen flex-1 mt-24 tablet:pt-24 h-full relative">
 			<div className="container z-50 relative">
-				<div className="max-w-[400px] mx-auto rounded-xl bg-[#13121D] p-2 text-white shadow-xl relative">
+				<div className="max-w-[400px] mx-auto rounded-xl tablet:bg-[#13121D] p-2 text-white shadow-xl relative">
 					<TokenModal
 						token={token}
 						visible={showTokenModal}
@@ -176,7 +181,7 @@ const Swap = ({ token }) => {
 						<div className="grid grid-cols-2 tablet:grid-cols-5 gap-8 items-center">
 							<div className="tablet:col-span-3">
 								<input
-									type="text"
+									type="number"
 									value={inputValue}
 									onChange={(e) => setInputValue(e.target.value)}
 									onBlur={() => {
@@ -304,21 +309,3 @@ const Swap = ({ token }) => {
 	);
 };
 export default Swap;
-
-export const getStaticProps = async (ctx) => {
-	try {
-		const response = await fetch(`https://gateway.ipfs.io/ipns/tokens.uniswap.org`);
-		const json = await response.json();
-		const tokenArray = Object.keys(json.tokens)
-			.map((key) => json.tokens[key])
-			.filter((token) => token.chainId == 1);
-
-		return {
-			props: {
-				token: tokenArray,
-			},
-		};
-	} catch (err) {
-		console.log(err);
-	}
-};

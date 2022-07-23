@@ -1,8 +1,6 @@
-import { useContext } from "react";
-
-import { AppContext } from "../context";
 import Link from "next/link";
 import WalletConnectButton from "./WalletConnectButton";
+import SearchForm from "./SearchForm";
 
 const Navbar = () => {
 	return (
@@ -13,7 +11,7 @@ const Navbar = () => {
 					<span className="hidden tablet:block font-medium tracking-wider uppercase ml-2">Blockpunks</span>
 				</a>
 			</Link>
-
+			<SearchForm />
 			<div className="flex items-center justify-end gap-8 text-sm">
 				<Link href="/swap">
 					<a className="text-white flex items-center justify-start gap-2">

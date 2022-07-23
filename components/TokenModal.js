@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import { useToken } from "../hooks/useProtocoll";
-import { chain } from "wagmi";
+import { useState } from "react";
 
 const TokenModal = ({ visible, onChange, onClose, token }) => {
 	const [filter, setFilter] = useState("");
 
 	return visible ? (
-		<div className="absolute inset-0 z-10 bg-[#13121D] flex flex-col justify-start rounded-xl">
+		<div className="absolute inset-0 z-10 bg-black tablet:bg-[#13121D] flex flex-col justify-start rounded-xl">
 			<div className="p-4 flex">
 				<span className="text-center text-white text-lg tracking-wider font-medium flex-1">Select Token</span>
 				<button

@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import Link from "next/link";
+import { NotificationContext } from "../context/index";
 
-const Home = ({ pairs }) => {
+const Home = () => {
+	const { tokenpairs } = useContext(NotificationContext);
 	return (
 		<main className=" w-full flex-1 text-white leading-6 relative flex flex-col justify-start mt-24 px-4">
 			<div className="mx-auto max-w-[480px] h-full flex-1 flex flex-col justify-start">
@@ -34,7 +37,7 @@ const Home = ({ pairs }) => {
 					<div className="relative">
 						<div className="absolute top-0 left-0 w-full h-[80px] bg-gradient-to-b from-black z-50"></div>
 						<ul className="py-4">
-							{pairs.map((pair, index) => (
+							{tokenpairs.map((pair, index) => (
 								<li key={index} className="grid grid-cols-2 gap-8 items-center mb-2 p-4">
 									<span className="flex items-center">
 										<img
@@ -70,37 +73,6 @@ const Home = ({ pairs }) => {
 			</div>
 		</main>
 	);
-};
-
-export const getStaticProps = async (ctx) => {
-	try {
-		const tokenPairs = await fetch(
-			`https://raw.githubusercontent.com/jab416171/uniswap-pairtokens/master/uniswap_pair_tokens.json`
-		)
-			.then((res) => res.json())
-			.then((res) => res.tokens.slice(0, 20));
-
-		const token = await fetch(`https://gateway.ipfs.io/ipns/tokens.uniswap.org`).then((res) => res.json());
-		const tokenArray = Object.keys(token.tokens).map((key) => token.tokens[key]);
-
-		const pairs = tokenPairs
-			.map((pair) => {
-				const name = pair.name.split(" ")[pair.name.split(" ").length - 1];
-				const tokens = name.split("/");
-				const tokenA = tokenArray.find((token) => token.symbol == tokens[0]);
-				const tokenB = tokenArray.find((token) => token.symbol == tokens[1]);
-				return { tokenA, tokenB, data: pair };
-			})
-			.filter((pair) => pair.tokenA !== undefined && pair.tokenB !== undefined);
-
-		return {
-			props: {
-				pairs: pairs,
-			},
-		};
-	} catch (err) {
-		console.log(err);
-	}
 };
 
 export default Home;
