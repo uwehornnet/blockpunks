@@ -11,8 +11,10 @@ const Mint = () => {
 				</div>
 			</div>
 			<div className="container grid grid-cols-1 laptop:grid-cols-2 items-stretch pt-24 gap-16">
-				<div className="flex flex-col laptop:justify-center order-2 laptop:order-1 z-30">
-					<h1 className="text-4xl font-bolder mb-8">Blockpunks - Collection of 7500 ERC721 Token</h1>
+				<div className="flex flex-col laptop:justify-center order-2 laptop:order-1 z-30 p-8">
+					<h1 className="text-4xl tablet:text-7xl mb-8">
+						<span className="font-medium">BLCKPNKS</span> - A collection of 7500 uniqe NFT
+					</h1>
 					<p>
 						Spacepunks NFT is inspired by leading Projects like{" "}
 						<span className="font-medium">@cryptopunksnft</span>,{" "}

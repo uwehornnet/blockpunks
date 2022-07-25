@@ -7,8 +7,8 @@ const Navbar = () => {
 		<div className="flex items-center justify-between px-4 py-2 fixed top-0 left-0 w-screen bg-black z-[90] border-b-[1px] border-solid border-slate-800">
 			<Link href="/">
 				<a className="flex items-center text-white">
-					<img src="/images/favicon.svg" alt="blockpunks.nft" />
-					<span className="hidden tablet:block font-medium tracking-wider uppercase ml-2">Blockpunks</span>
+					<img src="/images/favicon.svg" alt="thepunxs.xyz" />
+					<span className="hidden tablet:block font-medium tracking-wider ml-2">BLCKPNKS</span>
 				</a>
 			</Link>
 			<SearchForm />

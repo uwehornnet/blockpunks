@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
 	return (
 		<>
 			<Head>
-				<title>Blockpunks.nft</title>
+				<title>blckpnks.com</title>
 				<link rel="icon" href="/images/favicon.svg" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" />
