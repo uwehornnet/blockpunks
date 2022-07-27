@@ -1,9 +1,11 @@
 import { useContext } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { NotificationContext } from "../context/index";
 
 const Home = () => {
 	const { tokenpairs } = useContext(NotificationContext);
+	const router = useRouter();
 	return (
 		<main className=" w-full flex-1 text-white leading-6 relative flex flex-col justify-start mt-24 px-4">
 			<div className="mx-auto max-w-[480px] h-full flex-1 flex flex-col justify-start">
@@ -43,7 +45,15 @@ const Home = () => {
 										<img
 											src={pair.tokenA.logoURI}
 											alt={pair.tokenA.name}
-											className="w-8 h-8 rounded-full mr-4"
+											className="w-8 h-8 rounded-full mr-4 cursor-pointer"
+											onClick={() => {
+												router.push({
+													pathname: "/token",
+													query: {
+														address: pair.tokenA.address,
+													},
+												});
+											}}
 										/>
 										<span>
 											<small className="text-xs text-slate-600 font-medium tracking-wider">
@@ -56,7 +66,15 @@ const Home = () => {
 										<img
 											src={pair.tokenB.logoURI}
 											alt={pair.tokenB.name}
-											className="w-8 h-8 rounded-full mr-4"
+											className="w-8 h-8 rounded-full mr-4 cursor-pointer"
+											onClick={() => {
+												router.push({
+													pathname: "/token",
+													query: {
+														address: pair.tokenB.address,
+													},
+												});
+											}}
 										/>
 										<span>
 											<small className="text-xs text-slate-600 font-medium tracking-wider">

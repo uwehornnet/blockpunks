@@ -10,6 +10,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@alch/alchemy-sdk": "^1.2.0",
 		"@openzeppelin/contracts": "^4.6.0",
 		"@rainbow-me/rainbowkit": "^0.3.4",
 		"@walletconnect/web3-provider": "^1.7.8",

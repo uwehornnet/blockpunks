@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { useConnect, useProvider, useSigner } from "wagmi";
-
 import { Contract } from "ethers";
-
 import BlockpunksNFT from "../BlockpunksNFT.json";
 
 const MintForm = () => {
@@ -83,69 +80,71 @@ const MintForm = () => {
 		}, 3000);
 	}, []);
 
-	return isConnected && (
-		<>
-			<div className="flex items-center gap-16 mb-8 mt-16">
-				<div>
-					<small>already minted</small>
-					<p className="text-4xl">{tokenAmount}</p>
+	return (
+		isConnected && (
+			<>
+				<div className="flex items-center gap-16 mb-8 mt-16">
+					<div>
+						<small>already minted</small>
+						<p className="text-4xl">{tokenAmount}</p>
+					</div>
+					<p className="text-4xl">/</p>
+					<div>
+						<small>total supply</small>
+						<p className="text-4xl">{tokenSupply}</p>
+					</div>
 				</div>
-				<p className="text-4xl">/</p>
-				<div>
-					<small>total supply</small>
-					<p className="text-4xl">{tokenSupply}</p>
-				</div>
-			</div>
-			<div className="flex gap-4 mb-24">
-				<div className="flex items-center bg-white rounded-md p-2 text-black">
-					<button
-						className="disabled:cursor-not-allowed"
-						disabled={mintValue == 1}
-						onClick={() => setMintValue((val) => (val > 1 ? val - 1 : val))}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							strokeWidth={2}
+				<div className="flex gap-4 mb-24">
+					<div className="flex items-center bg-white rounded-md p-2 text-black">
+						<button
+							className="disabled:cursor-not-allowed"
+							disabled={mintValue == 1}
+							onClick={() => setMintValue((val) => (val > 1 ? val - 1 : val))}
 						>
-							<path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
-						</svg>
-					</button>
-					<input
-						type="text"
-						className="text-center max-w-[40px]"
-						value={mintValue}
-						onChange={(e) => setMintValue(Number(e.target.value))}
-					/>
-					<button
-						className="disabled:cursor-not-allowed"
-						disabled={mintValue == 5}
-						onClick={() => setMintValue((val) => (val < 5 ? val + 1 : val))}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							strokeWidth={2}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								strokeWidth={2}
+							>
+								<path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
+							</svg>
+						</button>
+						<input
+							type="text"
+							className="text-center max-w-[40px]"
+							value={mintValue}
+							onChange={(e) => setMintValue(Number(e.target.value))}
+						/>
+						<button
+							className="disabled:cursor-not-allowed"
+							disabled={mintValue == 5}
+							onClick={() => setMintValue((val) => (val < 5 ? val + 1 : val))}
 						>
-							<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-						</svg>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								strokeWidth={2}
+							>
+								<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+							</svg>
+						</button>
+					</div>
+					<button
+						disabled={loading}
+						onClick={mintNFT}
+						className="bg-violet-600 text-white font-medium tracking-wider rounded-md py-3 px-6"
+					>
+						{stateMessage}
 					</button>
 				</div>
-				<button
-					disabled={loading}
-					onClick={mintNFT}
-					className="bg-violet-600 text-white font-medium tracking-wider rounded-md py-3 px-6"
-				>
-					{stateMessage}
-				</button>
-			</div>
-		</>
+			</>
+		)
 	);
 };
 
